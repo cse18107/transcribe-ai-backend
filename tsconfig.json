@@ -10,9 +10,7 @@
     "outDir": "./dist",
     "rootDir": "./",
     "allowJs": true,
-    "resolveJsonModule": true,
-    "typeRoots": ["./node_modules/@types"],
-    "types": ["node", "express", "cors", "multer", "fluent-ffmpeg"]
+    "resolveJsonModule": true
   },
   "include": ["*.ts"],
   "exclude": ["node_modules", "dist"]
