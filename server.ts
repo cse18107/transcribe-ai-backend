@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import cors from 'cors';
 import multer from 'multer';
 import dotenv from 'dotenv';
@@ -9,8 +9,8 @@ import { dirname } from 'path';
 import { writeFile, readFile, unlink } from 'fs/promises';
 import { join } from 'path';
 import { createReadStream } from 'fs';
-import { File } from 'formdata-node'; // Install: npm install formdata-node
-import { FormData } from 'formdata-node'; // Install: npm install formdata-node
+import { File } from 'formdata-node';
+import { FormData } from 'formdata-node';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -76,7 +76,7 @@ async function retryWithBackoff<T>(
   throw lastError;
 }
 
-app.post('/api/transcribe', upload.single('audio'), async (req: express.Request, res: express.Response) => {
+app.post('/api/transcribe', upload.single('audio'), async (req: Request, res: Response) => {
   try {
     if (!req.file) {
       return res.status(400).json({ error: 'No file provided' });
@@ -172,7 +172,7 @@ app.post('/api/transcribe', upload.single('audio'), async (req: express.Request,
   }
 });
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
