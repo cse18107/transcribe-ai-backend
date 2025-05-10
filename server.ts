@@ -17,9 +17,15 @@ const __dirname = dirname(__filename);
 
 dotenv.config();
 
-// Set FFmpeg path
-ffmpeg.setFfmpegPath('C:\\ffmpeg\\bin\\ffmpeg.exe');
-ffmpeg.setFfprobePath('C:\\ffmpeg\\bin\\ffprobe.exe');
+// Set FFmpeg path based on environment
+if (process.platform === 'win32') {
+  ffmpeg.setFfmpegPath('C:\\ffmpeg\\bin\\ffmpeg.exe');
+  ffmpeg.setFfprobePath('C:\\ffmpeg\\bin\\ffprobe.exe');
+} else {
+  // For Linux/Unix systems (like Render.com)
+  ffmpeg.setFfmpegPath('/usr/bin/ffmpeg');
+  ffmpeg.setFfprobePath('/usr/bin/ffprobe');
+}
 
 const app = express();
 const upload = multer({ 
@@ -93,8 +99,8 @@ app.post('/api/transcribe', upload.single('audio'), async (req: express.Request,
         .toFormat('mp3')
         .audioFrequency(16000)
         .audioChannels(1)
-        .on('end', resolve)
-        .on('error', (err) => {
+        .on('end', () => resolve(undefined))
+        .on('error', (err: Error) => {
           console.error('FFmpeg error:', err);
           reject(err);
         })
