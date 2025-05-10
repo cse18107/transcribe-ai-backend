@@ -2,7 +2,7 @@ services:
   - type: web
     name: transcript-ai-backend
     runtime: node
-    buildCommand: npm install && npm run build
+    buildCommand: npm install && npm install --save-dev @types/express @types/cors @types/multer @types/fluent-ffmpeg && npm run build
     startCommand: npm start
     envVars:
       - key: NODE_ENV
