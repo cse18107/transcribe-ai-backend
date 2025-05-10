@@ -15,6 +15,7 @@ declare module 'express' {
   export interface Express {
     json(): any;
     static(root: string): any;
+    (): Application;
   }
   const express: Express;
   export default express;
