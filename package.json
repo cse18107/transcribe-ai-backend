@@ -4,10 +4,13 @@
   "description": "Audio transcription application using OpenAI Whisper",
   "main": "dist/server.js",
   "type": "module",
+  "engines": {
+    "node": "18.17.0"
+  },
   "scripts": {
     "start": "node dist/server.js",
     "dev": "nodemon server.ts",
-    "build": "tsc",
+    "build": "npm install --save-dev @types/express @types/cors @types/multer @types/fluent-ffmpeg && tsc",
     "watch": "tsc -w"
   },
   "dependencies": {
