@@ -12,7 +12,11 @@ declare module 'express' {
     listen(port: number, callback?: () => void): void;
     post(path: string, ...handlers: any[]): void;
   }
-  const express: () => Application;
+  export interface Express {
+    json(): any;
+    static(root: string): any;
+  }
+  const express: Express;
   export default express;
 }
 
